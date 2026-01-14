@@ -1,0 +1,66 @@
+
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2D1A832E2BA4C69A00A5232A /* HabitTrackerWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1A832D2BA4C69A00A5232A /* HabitTrackerWidget.swift */; };
+		2D1A83312BA4C6A800A5232A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D1A83302BA4C6A800A5232A /* Assets.xcassets */; };
+		97C146E51CF9000F007C117D /* Runner for unit-tests */ = {isa = PBXBuildFile; fileRef = 97C146DF1CF9000F007C117D /* Runner.app */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		9740449A1C6339F000000000 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Runner/Info.plist; sourceTree = "<group>"; };
+		97C146DF1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D1A832D2BA4C69A00A5232A /* HabitTrackerWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTrackerWidget.swift; sourceTree = "<group>"; };
+		2D1A83302BA4C6A800A5232A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = HabitTrackerWidget/Assets.xcassets; sourceTree = "<group>"; };
+		2D1A83332BA4C6C000A5232A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		9740448A1C6339F000000000 = {isa = PBXGroup; children = ( 974044921C6339F000000000 /* Runner */, 974044941C6339F000000000 /* Frameworks */, 974044951C6339F000000000 /* Products */, 2D1A83342BA4C6C000A5232A /* HabitTrackerWidget */ ); name = ""; sourceTree = "<group>"; };
+		974044921C6339F000000000 /* Runner */ = {isa = PBXGroup; children = ( 9740449A1C6339F000000000 /* Info.plist */ ); name = Runner; path = Runner; sourceTree = "<group>"; };
+		974044941C6339F000000000 /* Frameworks */ = {isa = PBXGroup; children = ( ); name = Frameworks; sourceTree = "<group>"; };
+		974044951C6339F000000000 /* Products */ = {isa = PBXGroup; children = ( 97C146DF1CF9000F007C117D /* Runner.app */ ); name = Products; sourceTree = "<group>"; };
+		2D1A83342BA4C6C000A5232A /* HabitTrackerWidget */ = {isa = PBXGroup; children = ( 2D1A832D2BA4C69A00A5232A /* HabitTrackerWidget.swift */, 2D1A83302BA4C6A800A5232A /* Assets.xcassets */, 2D1A83332BA4C6C000A5232A /* Info.plist */ ); name = HabitTrackerWidget; path = HabitTrackerWidget; sourceTree = "<group>"; };
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1811FE4E25523919001C6953 /* Runner */ = {isa = PBXNativeTarget; buildConfigurationList = 1811FE5A25523919001C6953 /* Build configuration list for PBXNativeTarget "Runner" */; buildPhases = ( 1811FE4B25523919001C6953 /* Run Script */, 1811FE4C25523919001C6953 /* Sources */, 1811FE4D25523919001C6953 /* Frameworks */, 1811FE4E25523919001C6953 /* Resources */ ); buildRules = ( ); dependencies = ( ); name = Runner; productName = Runner; productReference = 97C146DF1CF9000F007C117D /* Runner.app */; productType = "com.apple.product-type.application"; };
+		2D1A832A2BA4C68B00A5232A /* HabitTrackerWidget */ = {isa = PBXNativeTarget; buildConfigurationList = 2D1A83372BA4C6C000A5232A /* Build configuration list for PBXNativeTarget "HabitTrackerWidget" */; buildPhases = ( 2D1A832B2BA4C68B00A5232A /* Sources */, 2D1A832C2BA4C68B00A5232A /* Resources */ ); buildRules = ( ); dependencies = ( ); name = HabitTrackerWidget; productName = HabitTrackerWidget; productReference = 2D1A832A2BA4C68B00A5232A /* HabitTrackerWidget.appex */; productType = "com.apple.product-type.app-extension"; };
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1811FE5125523919001C6953 /* Project object */ = {isa = PBXProject; attributes = {LastUpgradeCheck = 1320; TargetAttributes = { 1811FE4E25523919001C6953 = { SystemCapabilities = { com.apple.ApplicationGroups.iOS = { enabled = 1; }; }; }; 2D1A832A2BA4C68B00A5232A = { SystemCapabilities = { com.apple.ApplicationGroups.iOS = { enabled = 1; }; }; }; }; }; buildConfigurationList = 1811FE5425523919001C6953 /* Build configuration list for PBXProject "Runner" */; compatibilityVersion = "Xcode 11.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = ( en, Base, ); mainGroup = 9740448A1C6339F000000000; productRefGroup = 974044951C6339F000000000; projectDirPath = ""; projectRoot = ""; targets = ( 1811FE4E25523919001C6953 /* Runner */, 2D1A832A2BA4C68B00A5232A /* HabitTrackerWidget */, ); };
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1811FE4C25523919001C6953 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ( ); runOnlyForDeploymentPostprocessing = 0; };
+		2D1A832B2BA4C68B00A5232A /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = ( 2D1A832E2BA4C69A00A5232A /* HabitTrackerWidget.swift in Sources */, ); runOnlyForDeploymentPostprocessing = 0; };
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		1811FE5825523919001C6953 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ANALYZER_NONNULL = YES; CLANG_CXX_LANGUAGE_STANDARD = "gnu++14"; CLANG_CXX_LIBRARY = "libc++"; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; CLANG_WARN_BLOCK_CAPTURE_AUTOCREATIO = YES; CLANG_WARN_BOOL_CONVERSION = YES; CLANG_WARN_COMMA = YES; CLANG_WARN_CONSTANT_CONVERSION = YES; CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR; CLANG_WARN_EMPTY_BODY = YES; CLANG_WARN_ENUM_CONVERSION = YES; CLANG_WARN_INFINITE_RECURSION = YES; CLANG_WARN_INT_CONVERSION = YES; CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES; CLANG_WARN_OBJC_LITERAL_CONVERSION = YES; CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR; CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES; CLANG_WARN_RANGE_LOOP_ANALYSIS = YES; CLANG_WARN_STRICT_PROTOTYPES = YES; CLANG_WARN_SUSPICIOUS_MOVE = YES; CLANG_WARN_UNREACHABLE_CODE = YES; CLANG_WARN__DUPLICATE_METHOD_MATCH = YES; CODE_SIGN_IDENTITY = "Apple Development"; DEVELOPMENT_TEAM = ""; GCC_C_LANGUAGE_STANDARD = gnu99; GCC_NO_COMMON_BLOCKS = YES; GCC_WARN_64_TO_32_BIT_CONVERSION = YES; GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR; GCC_WARN_UNDECLARED_SELECTOR = YES; GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE; GCC_WARN_UNUSED_FUNCTION = YES; GCC_WARN_UNUSED_VARIABLE = YES; IPHONEOS_DEPLOYMENT_TARGET = 11.0; MTL_ENABLE_DEBUG_INFO = YES; ONLY_ACTIVE_ARCH = YES; SDKROOT = iphoneos; }; name = Debug; };
+		1811FE5925523919001C6953 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ANALYZER_NONNULL = YES; CLANG_CXX_LANGUAGE_STANDARD = "gnu++14"; CLANG_CXX_LIBRARY = "libc++"; CLANG_ENABLE_MODULES = YES; CLANG_ENABLE_OBJC_ARC = YES; CLANG_WARN_BLOCK_CAPTURE_AUTOCREATIO = YES; CLANG_WARN_BOOL_CONVERSION = YES; CLANG_WARN_COMMA = YES; CLANG_WARN_CONSTANT_CONVERSION = YES; CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR; CLANG_WARN_EMPTY_BODY = YES; CLANG_WARN_ENUM_CONVERSION = YES; CLANG_WARN_INFINITE_RECURSION = YES; CLANG_WARN_INT_CONVERSION = YES; CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES; CLANG_WARN_OBJC_LITERAL_CONVERSION = YES; CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR; CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES; CLANG_WARN_RANGE_LOOP_ANALYSIS = YES; CLANG_WARN_STRICT_PROTOTYPES = YES; CLANG_WARN_SUSPICIOUS_MOVE = YES; CLANG_WARN_UNREACHABLE_CODE = YES; CLANG_WARN__DUPLICATE_METHOD_MATCH = YES; CODE_SIGN_IDENTITY = "Apple Development"; DEVELOPMENT_TEAM = ""; GCC_C_LANGUAGE_STANDARD = gnu99; GCC_NO_COMMON_BLOCKS = YES; GCC_WARN_64_TO_32_BIT_CONVERSION = YES; GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR; GCC_WARN_UNDECLARED_SELECTOR = YES; GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE; GCC_WARN_UNUSED_FUNCTION = YES; GCC_WARN_UNUSED_VARIABLE = YES; IPHONEOS_DEPLOYMENT_TARGET = 11.0; MTL_ENABLE_DEBUG_INFO = NO; SDKROOT = iphoneos; }; name = Release; };
+		2D1A83352BA4C6C000A5232A /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; COM_APPLE_APPLICATION_GROUPS = ( "group.com.example.habit_tracker", ); CURRENT_PROJECT_VERSION = 1; INFOPLIST_FILE = HabitTrackerWidget/Info.plist; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"; MARKETING_VERSION = "1.0"; PRODUCT_BUNDLE_IDENTIFIER = "com.example.myapp.HabitTrackerWidget"; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Debug; };
+		2D1A83362BA4C6C000A5232A /* Release */ = {isa = XCBuildConfiguration; buildSettings = {ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon; CODE_SIGN_STYLE = Automatic; COM_APPLE_APPLICATION_GROUPS = ( "group.com.example.habit_tracker", ); CURRENT_PROJECT_VERSION = 1; INFOPLIST_FILE = HabitTrackerWidget/Info.plist; LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks"; MARKETING_VERSION = "1.0"; PRODUCT_BUNDLE_IDENTIFIER = "com.example.myapp.HabitTrackerWidget"; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_VERSION = 5.0; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Release; };
+		1811FE5625523919001C6953 /* Debug */ = {isa = XCBuildConfiguration; buildSettings = {PRODUCT_NAME = Runner; }; name = Debug; };
+		1811FE5725523919001C6953 /* Release */ = {isa = XCBuildConfiguration; buildSettings = {PRODUCT_NAME = Runner; }; name = Release; };
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1811FE5425523919001C6953 /* Build configuration list for PBXProject "Runner" */ = {isa = XCConfigurationList; buildConfigurations = ( 1811FE5625523919001C6953 /* Debug */, 1811FE5725523919001C6953 /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		1811FE5A25523919001C6953 /* Build configuration list for PBXNativeTarget "Runner" */ = {isa = XCConfigurationList; buildConfigurations = ( 1811FE5825523919001C6953 /* Debug */, 1811FE5925523919001C6953 /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		2D1A83372BA4C6C000A5232A /* Build configuration list for PBXNativeTarget "HabitTrackerWidget" */ = {isa = XCConfigurationList; buildConfigurations = ( 2D1A83352BA4C6C000A5232A /* Debug */, 2D1A83362BA4C6C000A5232A /* Release */, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+/* End XCConfigurationList section */
+	};
+	rootObject = 1811FE5125523919001C6953 /* Project object */;
+}

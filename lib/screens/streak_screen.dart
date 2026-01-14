@@ -11,7 +11,8 @@ class StreakScreen extends StatefulWidget {
   State<StreakScreen> createState() => _StreakScreenState();
 }
 
-class _StreakScreenState extends State<StreakScreen> with SingleTickerProviderStateMixin {
+class _StreakScreenState extends State<StreakScreen>
+    with SingleTickerProviderStateMixin {
   late VideoPlayerController _controller;
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
@@ -24,25 +25,29 @@ class _StreakScreenState extends State<StreakScreen> with SingleTickerProviderSt
     // --- Video Logic ---
     // Choose the video based on the streak count.
     bool isMilestone = widget.streakCount > 0 && widget.streakCount % 10 == 0;
-    String videoPath = isMilestone ? 'assets/videos/Streak2.mp4' : 'assets/videos/Streak1.mp4';
+    String videoPath = isMilestone
+        ? 'assets/videos/Streak2.mp4'
+        : 'assets/videos/Streak1.mp4';
 
     _controller = VideoPlayerController.asset(videoPath)
-      ..initialize().then((_) {
-        setState(() {});
-        _controller.play();
-        _controller.setLooping(true);
-      }).catchError((error, stackTrace) {
-        developer.log(
-          'Video not found. Please upload video files.',
-          name: 'myapp.streak_screen',
-          error: error,
-          stackTrace: stackTrace,
-        );
-      });
+      ..initialize()
+          .then((_) {
+            setState(() {});
+            _controller.play();
+            _controller.setLooping(true);
+          })
+          .catchError((error, stackTrace) {
+            developer.log(
+              'Video not found. Please upload video files.',
+              name: 'myapp.streak_screen',
+              error: error,
+              stackTrace: stackTrace,
+            );
+          });
 
     // --- Animation Logic ---
     _animationController = AnimationController(
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 800),
       vsync: this,
     );
 
@@ -51,7 +56,7 @@ class _StreakScreenState extends State<StreakScreen> with SingleTickerProviderSt
       curve: Curves.elasticOut,
     );
 
-    Future.delayed(const Duration(milliseconds: 1200), () {
+    Future.delayed(const Duration(milliseconds: 500), () {
       if (mounted) {
         setState(() {
           _showText = true;
@@ -85,7 +90,8 @@ class _StreakScreenState extends State<StreakScreen> with SingleTickerProviderSt
                     ScaleTransition(
                       scale: _scaleAnimation,
                       child: Text(
-                        widget.streakCount.toString(), // Display the actual streak count
+                        widget.streakCount
+                            .toString(), // Display the actual streak count
                         style: const TextStyle(
                           fontFamily: 'DuolingoFeather',
                           fontSize: 150,

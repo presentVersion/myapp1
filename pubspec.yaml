@@ -4,20 +4,25 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.4.3 <4.0.0'
+  sdk: '>=3.8.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
   video_player: ^2.10.0
-  home_widget: ^0.5.0
+  home_widget: ^0.9.0
   shared_preferences: ^2.5.4
   cupertino_icons: ^1.0.6
+  json_annotation: ^4.9.0
+  uuid: ^4.5.2
+  table_calendar: ^3.2.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^4.0.0
+  build_runner: ^2.10.4
+  json_serializable: ^6.11.3
 
 flutter:
   uses-material-design: true
@@ -27,18 +32,14 @@ flutter:
     - assets/videos/
 
   fonts:
+    - family: DINRoundPro
+      fonts:
+        - asset: assets/fonts/dinroundpro_light.otf
+        - asset: assets/fonts/dinroundpro.otf
+        - asset: assets/fonts/dinroundpro_medi.otf
+          weight: 500
+        - asset: assets/fonts/dinroundpro_bold.otf
+          weight: 700
     - family: DuolingoFeather
       fonts:
         - asset: assets/fonts/Duolingo Feather Bold.ttf
-          weight: 700
-    - family: DINRoundPro
-      fonts:
-        - asset: assets/fonts/dinroundpro.otf
-        - asset: assets/fonts/dinroundpro_black.otf
-          weight: 900
-        - asset: assets/fonts/dinroundpro_bold.otf
-          weight: 700
-        - asset: assets/fonts/dinroundpro_light.otf
-          weight: 300
-        - asset: assets/fonts/dinroundpro_medi.otf
-          weight: 500
