@@ -1,58 +1,80 @@
-# Habit Tracker App Blueprint
+# Project Blueprint
 
 ## Overview
 
-This document outlines the design, features, and implementation of the Habit Tracker application. The goal is to create a beautiful and intuitive mobile app that helps users build and maintain positive habits through a visually engaging and motivating experience.
+A Flutter-based habit tracking application with a modern, Duolingo-inspired design. The app focuses on building streaks, visualizing progress, and providing a rewarding user experience through animations and widgets.
 
-## Style and Design
+## Core Features
 
-- **Theme:** Dark theme with a primary color of orange.
-- **Fonts:**
-    - `DINRoundPro` for general text.
-    - `DuolingoFeather` for large, prominent numbers (streaks).
-- **Icons:** Custom image assets for key actions:
-    - **Perfect Day Streak:** `app_icon_fire.png` (replaces `lightning.png`)
-    - **Calendar:** `book.png`
-    - **Add Habit:** `add.png`
-    - **Complete Habit:** `check.png` (incomplete) and `unchecked.png` (complete).
-- **App Icon:**  A fire icon (`app_icon_fire.png`) is used in the `AppBar` to represent the "Perfect Day" streak.
+*   **Habit Management:** Add, complete, and track daily habits.
+*   **Streak Tracking:**
+    *   Calculate and display streaks for individual habits.
+    *   Calculate and display a "perfect day" streak for completing all habits on a given day.
+*   **Progress Visualization:**
+    *   A dedicated progress screen with a calendar view.
+    *   Streak lines on the calendar to connect consecutive completed days.
+    *   A badge system to reward users for achievements.
+*   **Streak Celebration:** A full-screen celebration with video animation when a habit is completed.
+*   **Home/Lock Screen Widgets:** Interactive widgets for both Android and iOS.
 
-## Features
+## Design & UX Specifications
 
-### 1. Multi-Habit Tracking
+*   **Theme:** Duolingo-inspired, with custom fonts (`DuolingoFeather`, `DINRoundPro`), a dark and light theme, and a consistent color scheme.
+*   **Buttons:** Use a custom `ThemedButton` for all primary actions.
+*   **Animations:** Use video assets for a dynamic and engaging experience.
+*   **Icons:** Use custom SVG icons.
 
-- Users can add multiple habits they want to track.
-- Each habit has its own name and streak count.
-- The main screen displays a list of all habits.
+## Detailed Feature Requirements
 
-### 2. Streak Counter
+### 1. Streak Celebration Screen
 
-- Each habit has an individual streak counter that increments when the habit is marked as complete.
-- A "Perfect Day" streak counter on the main screen tracks the number of consecutive days all habits have been completed.
+*   **Trigger:** Appears when a habit is completed.
+*   **Animation:**
+    *   A full-screen video animation using `assets/videos/streak.mp4`.
+    *   The animation should play and loop.
+*   **Content (to appear *after* the animation):**
+    *   Display the habit's streak count (e.g., "5 Day Streak!").
+    *   Show a `WeeklyProgressView` widget that displays the last 7 days of progress for that habit.
+*   **Action:** A `ThemedButton` with the text "CONTINUE" to close the screen.
 
-### 3. Streak Calendar
+### 2. Progress Screen
 
-- A dedicated calendar screen visualizes the user's progress.
-- Days with at least one completed habit are marked on the calendar.
+*   **Calendar:**
+    *   A calendar view that displays all the days of the month.
+    *   For each habit, draw streak lines connecting the days the habit was completed consecutively.
+*   **Badges:**
+    *   A section to display achievement badges.
+    *   Each badge should be a card with a background image randomly selected from the widget background assets (`assets/images/widget_backgrounds/`).
 
-### 4. Data Persistence
+### 3. Home/Lock Screen Widgets (Android & iOS)
 
-- The app saves all habit data to the device's local storage.
-- Data is loaded when the app starts, so progress is never lost.
+*   **Functionality:**
+    *   Allow users to add multiple widgets to their home and lock screens.
+    *   Each widget should be associated with a specific habit.
+    *   Allow users to complete a habit directly from the widget.
+*   **Dynamic Icons:** The widget icon should change based on the habit's status for the current day:
+    *   **Unchecked:** A default icon to check the habit.
+    *   **Checked:** A streak icon.
+    *   **Missed:** A "freezed" icon (if the user has a streak freeze item).
+*   **Layout (Horizontal):**
+    1.  **Left:** The dynamic icon.
+    2.  **Middle:** The name of the habit.
+    3.  **Right:** The current streak count for the habit.
+*   **Appearance:**
+    *   Use random backgrounds for the widgets from the `assets/images/widget_backgrounds/` directory.
+    *   Consider different layouts or visual treatments for widgets with higher streak counts.
 
-### 5. Visually Engaging UI
+## Current Task & Action Plan
 
-- The app uses custom fonts and images to create a unique and polished look and feel.
-- The UI is designed to be simple, intuitive, and motivating.
+1.  **Acknowledge & Apologize:** Done.
+2.  **Create Blueprint:** This document.
+3.  **Fix Build Error:** The immediate priority is to fix the compilation error in `streak_celebration_screen.dart`.
+4.  **Implement `WeeklyProgressView`:** Create and integrate the `WeeklyProgressView` widget.
+5.  **Refactor `StreakCelebrationScreen`:**
+    *   Ensure it accepts a `Habit` object.
+    *   Display the `WeeklyProgressView` as per the requirements.
+    *   Fix the layout to correctly display all elements.
+6.  **Run Application:** Launch the app on the emulator to verify the fixes and new features.
+7.  **Address `ProgressScreen`:** Implement the calendar with streak lines and the badge section with image backgrounds.
+8.  **Re-implement Widgets:** Re-enable and enhance the home/lock screen widget functionality as per the detailed requirements.
 
-## Implementation Details
-
-- **Platform:** Flutter
-- **State Management:** `setState` and `SharedPreferences` for local data persistence.
-- **Data Model:**
-    - A `Habit` class (`lib/models/habit.dart`) with `json_serializable` for easy JSON conversion.
-- **Key Packages:**
-    - `shared_preferences`: For saving and loading data.
-    - `table_calendar`: For the streak calendar view.
-    - `uuid`: For generating unique IDs for each habit.
-    - `json_serializable` and `build_runner`: For code generation.

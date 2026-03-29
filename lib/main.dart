@@ -1,39 +1,102 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
-import 'package:myapp/models/habit.dart';
-import 'package:myapp/screens/profile_screen.dart';
-import 'package:myapp/screens/streak_screen.dart';
-import 'package:myapp/screens/calendar_screen.dart';
-import 'package:myapp/services/home_widget_service.dart';
+import 'package:habit_tracker/models/habit.dart';
+import 'package:habit_tracker/screens/progress_screen.dart';
+import 'package:habit_tracker/screens/streak_celebration_screen.dart';
+import 'package:habit_tracker/theme_provider.dart';
+import 'package:habit_tracker/widgets/themed_button.dart';
 import 'package:uuid/uuid.dart';
+import 'package:habit_tracker/widgets/habit_widget_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await HomeWidgetService.init(); // Initialize the home widget service
-  runApp(const HabitTrackerApp());
+  await HabitWidgetProvider.init(); // Initialize the home widget provider
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
-class HabitTrackerApp extends StatelessWidget {
-  const HabitTrackerApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Habit Tracker',
-      theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFF1A1A1A),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(fontFamily: 'DINRoundPro', color: Colors.white),
-          bodyMedium: TextStyle(fontFamily: 'DINRoundPro', color: Colors.white),
-          titleLarge: TextStyle(
-            fontFamily: 'DuolingoFeather',
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+    return Consumer<ThemeProvider>(
+      builder: (context, themeProvider, child) {
+        return MaterialApp(
+          title: 'Habit Tracker',
+          themeMode: themeProvider.themeMode,
+          theme: ThemeData(
+            brightness: Brightness.light,
+            scaffoldBackgroundColor: const Color(0xFFF0F0F0),
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Color(0xFF1A1A1A),
+              elevation: 0,
+              centerTitle: true,
+              titleTextStyle: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'DuolingoFeather',
+                color: Colors.white,
+              ),
+              iconTheme: IconThemeData(color: Colors.white),
+            ),
+            textTheme: const TextTheme(
+              bodyLarge: TextStyle(
+                fontFamily: 'DINRoundPro',
+                color: Colors.black,
+              ),
+              bodyMedium: TextStyle(
+                fontFamily: 'DINRoundPro',
+                color: Colors.black,
+              ),
+              titleLarge: TextStyle(
+                fontFamily: 'DuolingoFeather',
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
-        ),
-      ),
-      home: const HomeScreen(),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            scaffoldBackgroundColor: const Color(0xFF1A1A1A),
+            appBarTheme: const AppBarTheme(
+              backgroundColor: Color(0xFF1A1A1A),
+              elevation: 0,
+              centerTitle: true,
+              titleTextStyle: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'DuolingoFeather',
+                color: Colors.white,
+              ),
+              iconTheme: IconThemeData(color: Colors.white),
+            ),
+            textTheme: const TextTheme(
+              bodyLarge: TextStyle(
+                fontFamily: 'DINRoundPro',
+                color: Colors.white,
+              ),
+              bodyMedium: TextStyle(
+                fontFamily: 'DINRoundPro',
+                color: Colors.white,
+              ),
+              titleLarge: TextStyle(
+                fontFamily: 'DuolingoFeather',
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          home: const HomeScreen(),
+        );
+      },
     );
   }
 }
@@ -78,6 +141,11 @@ class _HomeScreenState extends State<HomeScreen> {
       _habits.map((habit) => habit.toJson()).toList(),
     );
     await prefs.setString('habits', habitsString);
+    if (_habits.isNotEmpty) {
+      final habit = _habits.first;
+      HabitWidgetProvider.sendData(
+          habit.name, habit.streakCount, habit.isCompletedToday());
+    }
   }
 
   void _calculateAndSetPerfectDayStreak() {
@@ -85,7 +153,6 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _perfectDayStreak = 0;
       });
-      HomeWidgetService.update(_perfectDayStreak); // Update widget
       return;
     }
 
@@ -95,6 +162,15 @@ class _HomeScreenState extends State<HomeScreen> {
       DateTime.now().month,
       DateTime.now().day,
     );
+
+    // Don't count streak if not all habits for today are complete yet.
+    // Check if yesterday was a perfect day, if so, the streak continues.
+    final today = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+    bool allCompletedToday = _habits.every((h) => h.completedDates.any((d) => DateUtils.isSameDay(d, today)));
+
+    if (!allCompletedToday) {
+       checkDate = checkDate.subtract(const Duration(days: 1));
+    }
 
     while (true) {
       bool allHabitsCompletedOnDay = _habits.every((habit) {
@@ -114,7 +190,6 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _perfectDayStreak = streak;
     });
-    HomeWidgetService.update(_perfectDayStreak); // Update widget
   }
 
   void _addHabit(String name) {
@@ -135,11 +210,12 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     _calculateAndSetPerfectDayStreak();
     _saveHabits();
+
     if (habit.isCompletedToday()) {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => StreakScreen(streakCount: habit.streakCount),
+          builder: (context) => StreakCelebrationScreen(habit: habit),
         ),
       );
     }
@@ -151,21 +227,44 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text('Add a New Habit'),
+          backgroundColor: const Color(0xFF2C2C2C),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          title: const Text(
+            'Add a New Habit',
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: 'DuolingoFeather',
+            ),
+          ),
           content: TextField(
             controller: controller,
             autofocus: true,
-            decoration: const InputDecoration(hintText: 'e.g., Go to the gym'),
+            style: const TextStyle(
+              color: Colors.white,
+              fontFamily: 'DINRoundPro',
+            ),
+            decoration: const InputDecoration(
+              hintText: 'e.g., Go to the gym',
+              hintStyle: TextStyle(
+                color: Colors.grey,
+                fontFamily: 'DINRoundPro',
+              ),
+            ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('Cancel'),
+              child: const Text(
+                'Cancel',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'DINRoundPro',
+                ),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () => _addHabit(controller.text),
-              child: const Text('Add'),
-            ),
+            ThemedButton(onPressed: () => _addHabit(controller.text), text: 'ADD'),
           ],
         );
       },
@@ -182,131 +281,97 @@ class _HomeScreenState extends State<HomeScreen> {
         .toList();
 
     return Scaffold(
-      backgroundColor: const Color(0xFF121212),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF121212),
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          'PERFECT DAY',
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'DuolingoFeather',
-          ),
-        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.calendar_today),
+            icon: SvgPicture.asset(
+              'assets/images/calendarpageviewbutton.svg',
+              height: 24,
+            ),
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CalendarScreen(habits: _habits)),
-              );
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+                MaterialPageRoute(
+                  builder: (context) => ProgressScreen(habits: _habits),
+                ),
               );
             },
           ),
         ],
       ),
       body: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset('assets/images/lightning.png', height: 24),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Perfect Day Streak: $_perfectDayStreak',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'DINRoundPro',
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Image.asset(
-                      'assets/images/Icon=Streak, Size=Medium.png',
-                      height: 24,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                final habit = incompleteHabits[index];
-                return _buildHabitItem(habit);
-              }, childCount: incompleteHabits.length),
-            ),
-            if (completedHabits.isNotEmpty)
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 16.0,
-                    horizontal: 16.0,
-                  ),
-                  child: Row(
-                    children: [
-                      const Expanded(child: Divider(color: Colors.grey)),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(
-                          'COMPLETED',
-                          style: TextStyle(
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'DINRoundPro',
-                          ),
-                        ),
-                      ),
-                      const Expanded(child: Divider(color: Colors.grey)),
-                    ],
-                  ),
-                ),
-              ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                final habit = completedHabits[index];
-                return _buildHabitItem(habit);
-              }, childCount: completedHabits.length),
-            ),
-
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  onPressed: _showAddHabitDialog,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.orange,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text(
-                    'ADD HABIT',
-                    style: TextStyle(
-                      fontSize: 18,
+        slivers: [
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.asset('assets/images/lightning.svg', height: 24),
+                  const SizedBox(width: 8),
+                  Text(
+                    '$_perfectDayStreak Day Streak',
+                    style: const TextStyle(
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'DINRoundPro',
                     ),
                   ),
+                  const SizedBox(width: 8),
+                  SvgPicture.asset('assets/images/streak.svg', height: 24),
+                ],
+              ),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final habit = incompleteHabits[index];
+              return _buildHabitItem(habit);
+            }, childCount: incompleteHabits.length),
+          ),
+          if (completedHabits.isNotEmpty)
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16.0,
+                  horizontal: 16.0,
+                ),
+                child: Row(
+                  children: [
+                    const Expanded(child: Divider(color: Colors.grey)),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                        'COMPLETED',
+                        style: TextStyle(
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'DINRoundPro',
+                        ),
+                      ),
+                    ),
+                    const Expanded(child: Divider(color: Colors.grey)),
+                  ],
                 ),
               ),
             ),
-          ],
-        ),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final habit = completedHabits[index];
+              return _buildHabitItem(habit);
+            }, childCount: completedHabits.length),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: GestureDetector(
+                onTap: _showAddHabitDialog,
+                child: SvgPicture.asset('assets/images/add.svg'),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -315,40 +380,38 @@ class _HomeScreenState extends State<HomeScreen> {
       margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.grey[800]?.withAlpha(128),
+        color: Theme.of(context).brightness == Brightness.dark
+            ? const Color(0xFF2C2C2C)
+            : Colors.white,
         borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey[700]!),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withAlpha(25),
+            spreadRadius: 1,
+            blurRadius: 3,
+            offset: const Offset(0, 1),
+          ),
+        ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             habit.name,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
               fontFamily: 'DINRoundPro',
+              color: Theme.of(context).textTheme.bodyLarge?.color,
             ),
           ),
-          InkWell(
+          GestureDetector(
             onTap: () => _completeHabit(habit),
-            child: Container(
-              width: 40,
+            child: SvgPicture.asset(
+              habit.isCompletedToday()
+                  ? 'assets/images/checked.svg'
+                  : 'assets/images/unchecked.svg',
               height: 40,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: habit.isCompletedToday()
-                    ? Colors.green
-                    : Colors.transparent,
-              ),
-              child: Center(
-                child: Image.asset(
-                  habit.isCompletedToday()
-                      ? 'assets/images/check.png'
-                      : 'assets/images/unchecked.png',
-                  height: 24,
-                ),
-              ),
             ),
           ),
         ],
