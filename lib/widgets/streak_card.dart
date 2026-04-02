@@ -18,43 +18,47 @@ class StreakCard extends StatelessWidget {
     return Container(
       width: 150,
       margin: const EdgeInsets.all(8),
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: SvgPicture.asset(imagePath).pictureProvider,
-          fit: BoxFit.cover,
-        ),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      child: Stack(
+        fit: StackFit.expand,
         children: [
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-              fontFamily: 'DuolingoFeather',
-            ),
-            textAlign: TextAlign.center,
+          SvgPicture.asset(
+            imagePath,
+            fit: BoxFit.cover,
           ),
-          const SizedBox(height: 10),
-          Text(
-            '$streak',
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 36,
-              fontFamily: 'DINRoundPro',
-            ),
-          ),
-          const Text(
-            'Day Streak',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontFamily: 'DINRoundPro',
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                    fontFamily: 'DuolingoFeather',
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  '$streak',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
+                    fontFamily: 'DINRoundPro',
+                  ),
+                ),
+                const Text(
+                  'Day Streak',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontFamily: 'DINRoundPro',
+                  ),
+                ),
+              ],
             ),
           ),
         ],

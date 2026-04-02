@@ -1,80 +1,46 @@
 # Project Blueprint
 
-## Overview
+## 1. ARCHITECTURE & NAVIGATION
 
-A Flutter-based habit tracking application with a modern, Duolingo-inspired design. The app focuses on building streaks, visualizing progress, and providing a rewarding user experience through animations and widgets.
+*   **Navigation:** The Bottom Bar must ONLY have two tabs: HOME (The Dashboard) and CALENDAR (The Progress Hub).
+*   **Home Screen (Daily Dashboard):** This is the functional "Battle Station."
+    *   **Filter Logic:** ONLY show habits/tasks scheduled for `DateTime.now().weekday`.
+    *   **The "Floating Action Button" (FAB):** Restore the habit creation button. It must open a "Squishy" modal.
+    *   **Rest Day Logic:** If no habits are scheduled for today, display `homepage.svg` and the text: "Enjoy your rest day! Your streak is protected." The FAB must still be present.
+*   **Progress Hub (Accessed via Streak Icon):** This screen is pushed when tapping the Top Bar Streak Icon.
 
-## Core Features
+## 2. THE "FREQUENCY" ENGINE (HABIT CREATION)
 
-*   **Habit Management:** Add, complete, and track daily habits.
-*   **Streak Tracking:**
-    *   Calculate and display streaks for individual habits.
-    *   Calculate and display a "perfect day" streak for completing all habits on a given day.
-*   **Progress Visualization:**
-    *   A dedicated progress screen with a calendar view.
-    *   Streak lines on the calendar to connect consecutive completed days.
-    *   A badge system to reward users for achievements.
-*   **Streak Celebration:** A full-screen celebration with video animation when a habit is completed.
-*   **Home/Lock Screen Widgets:** Interactive widgets for both Android and iOS.
+*   **The Model (`lib/models/habit.dart`):** A habit MUST contain `Map<int, bool> scheduledDays` where the `int` is the weekday (`DateTime.monday`, etc.) and `bool` indicates if it is scheduled.
+*   **Streak Logic:** A streak ONLY resets if a habit is missed on a day it was scheduled. "Off-days" (Rest days) do not break streaks.
+*   **Perfect Day Logic:** A day is "Perfect" (Gold Blob in Calendar) only if 100% of scheduled habits for that specific day were completed.
 
-## Design & UX Specifications
+## 3. THE "PROGRESS HUB"
 
-*   **Theme:** Duolingo-inspired, with custom fonts (`DuolingoFeather`, `DINRoundPro`), a dark and light theme, and a consistent color scheme.
-*   **Buttons:** Use a custom `ThemedButton` for all primary actions.
-*   **Animations:** Use video assets for a dynamic and engaging experience.
-*   **Icons:** Use custom SVG icons.
+*   **Access:** This screen must be pushed when tapping the Top Bar Streak Icon.
+*   **Section 1: The Toggle:** [Perfect Day | Specific Habit]. Rounded, squishy buttons using `Continuebuttonstatebeforepressed.svg`.
+*   **Section 2: The Duolingo Calendar:**
+    *   Build a grid with "Blob" connections. If Day 1 and Day 2 are "Perfect," draw a thick orange bridge between them.
+    *   Use day-specific SVGs: `Mondaychecked.svg`, `Tuesdayfreezed.svg`, etc.
+*   **Section 3: Milestone Path:** Staggered nodes (Left, Center, Right) connected by an 8px Dashed Line (CustomPainter). Use `streakchamp.svg` for unlocked milestones.
+*   **Section 4: The Trophy Case (Achievements):**
+    *   Move Achievements here. Remove the separate tab.
+    *   Display titled badges: "7-Day Perfect Streak", "30-Day Gym King", etc.
+    *   Use a 3-column grid with `Trophy.svg`. Locked achievements must be Greyscale.
 
-## Detailed Feature Requirements
+## 4. UI SPECIFICATIONS (THE DESIGN LAWS)
 
-### 1. Streak Celebration Screen
+*   **The "Pill" Header:** Wrap Top Bar stats (Streak/Gems) in containers with: `Border.all(color: Color(0xFFE5E5E5), width: 2)` and `borderRadius: 12`.
+*   **Colors:**
+    *   Primary Green: `#58CC02`
+    *   Streak Orange: `#FF9600`
+    *   Gem Blue: `#1CB0F6`
+    *   Border Grey: `#E5E5E5`
+*   **Shapes:** NO SHARP CORNERS. Minimum `BorderRadius` is 16.0.
+*   **Animations:** Trigger `Animation1.mp4` ONLY for Milestones (10, 30, 50 days) with a bottom-third text overlay: "X days to your next milestone!"
 
-*   **Trigger:** Appears when a habit is completed.
-*   **Animation:**
-    *   A full-screen video animation using `assets/videos/streak.mp4`.
-    *   The animation should play and loop.
-*   **Content (to appear *after* the animation):**
-    *   Display the habit's streak count (e.g., "5 Day Streak!").
-    *   Show a `WeeklyProgressView` widget that displays the last 7 days of progress for that habit.
-*   **Action:** A `ThemedButton` with the text "CONTINUE" to close the screen.
+## 5. ASSET INTEGRATION
 
-### 2. Progress Screen
-
-*   **Calendar:**
-    *   A calendar view that displays all the days of the month.
-    *   For each habit, draw streak lines connecting the days the habit was completed consecutively.
-*   **Badges:**
-    *   A section to display achievement badges.
-    *   Each badge should be a card with a background image randomly selected from the widget background assets (`assets/images/widget_backgrounds/`).
-
-### 3. Home/Lock Screen Widgets (Android & iOS)
-
-*   **Functionality:**
-    *   Allow users to add multiple widgets to their home and lock screens.
-    *   Each widget should be associated with a specific habit.
-    *   Allow users to complete a habit directly from the widget.
-*   **Dynamic Icons:** The widget icon should change based on the habit's status for the current day:
-    *   **Unchecked:** A default icon to check the habit.
-    *   **Checked:** A streak icon.
-    *   **Missed:** A "freezed" icon (if the user has a streak freeze item).
-*   **Layout (Horizontal):**
-    1.  **Left:** The dynamic icon.
-    2.  **Middle:** The name of the habit.
-    3.  **Right:** The current streak count for the habit.
-*   **Appearance:**
-    *   Use random backgrounds for the widgets from the `assets/images/widget_backgrounds/` directory.
-    *   Consider different layouts or visual treatments for widgets with higher streak counts.
-
-## Current Task & Action Plan
-
-1.  **Acknowledge & Apologize:** Done.
-2.  **Create Blueprint:** This document.
-3.  **Fix Build Error:** The immediate priority is to fix the compilation error in `streak_celebration_screen.dart`.
-4.  **Implement `WeeklyProgressView`:** Create and integrate the `WeeklyProgressView` widget.
-5.  **Refactor `StreakCelebrationScreen`:**
-    *   Ensure it accepts a `Habit` object.
-    *   Display the `WeeklyProgressView` as per the requirements.
-    *   Fix the layout to correctly display all elements.
-6.  **Run Application:** Launch the app on the emulator to verify the fixes and new features.
-7.  **Address `ProgressScreen`:** Implement the calendar with streak lines and the badge section with image backgrounds.
-8.  **Re-implement Widgets:** Re-enable and enhance the home/lock screen widget functionality as per the detailed requirements.
+*   Use the exact filenames from `assets/images/`:
+    *   `streak.svg`, `streakchamp.svg`, `checked.svg`, `unchecked.svg`, `freezed.svg`, `Trophy.svg`, `Goals.svg`, `homepage.svg`, `Continuebuttonstatebeforepressed.svg`, `Mondaychecked.svg`, `Tuesdayfreezed.svg`.
 

@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  video_player: ^2.10.0
+  video_player: ^2.10.1
   home_widget: ^0.9.0
   shared_preferences: ^2.5.4
   cupertino_icons: ^1.0.6
@@ -19,6 +19,10 @@ dependencies:
   google_fonts: ^6.2.1
   provider: ^6.1.2
   flutter_svg: ^2.2.3
+  just_audio: ^0.10.5
+  fl_chart: ^1.2.0
+  cloud_firestore: ^6.2.0
+  firebase_core: ^4.6.0
 
 dev_dependencies:
   flutter_test:
@@ -33,6 +37,7 @@ flutter:
   assets:
     - assets/images/
     - assets/videos/
+    - assets/fonts/
 
   fonts:
     - family: DINRoundPro
@@ -45,4 +50,4 @@ flutter:
           weight: 700
     - family: DuolingoFeather
       fonts:
-        - asset: assets/fonts/Duolingo Feather Bold.ttf
+        - asset: assets/fonts/DuolingoFeather.ttf

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:just_audio/just_audio.dart';
 
 class ContinueButton extends StatefulWidget {
   final VoidCallback onPressed;
@@ -7,36 +8,27 @@ class ContinueButton extends StatefulWidget {
   const ContinueButton({super.key, required this.onPressed});
 
   @override
-  State<ContinueButton> createState() => _ContinueButtonState();
+  State<ContinueButton> createState() => ContinueButtonState();
 }
 
-class _ContinueButtonState extends State<ContinueButton> {
-  bool _isPressed = false;
+class ContinueButtonState extends State<ContinueButton> {
+  final player = AudioPlayer();
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTapDown: (_) {
-        setState(() {
-          _isPressed = true;
-        });
-      },
-      onTapUp: (_) {
-        setState(() {
-          _isPressed = false;
-        });
+      onTap: () async {
+        await player.setAsset('assets/audio/Continue.mp3');
+        player.play();
         widget.onPressed();
       },
-      onTapCancel: () {
-        setState(() {
-          _isPressed = false;
-        });
-      },
-      child: SvgPicture.asset(
-        _isPressed
-            ? 'assets/images/Continuebuttonstateafterpressed.svg'
-            : 'assets/images/Continuebuttonstatebeforepressed.svg',
-      ),
+      child: SvgPicture.asset('assets/images/Continue.svg', height: 50),
     );
   }
 }

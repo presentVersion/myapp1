@@ -4,12 +4,18 @@ import 'package:home_widget/home_widget.dart';
 class HabitWidgetProvider {
   static const String appGroupId = 'YOUR_APP_GROUP_ID';
 
-  static Future<void> sendData(String habitName, int streakCount, bool isCompleted) async {
+  static Future<void> sendData(
+    String habitName,
+    int streakCount,
+    bool isCompleted,
+  ) async {
     await HomeWidget.saveWidgetData<String>('habit_name', habitName);
     await HomeWidget.saveWidgetData<int>('streak_count', streakCount);
     await HomeWidget.saveWidgetData<bool>('is_completed', isCompleted);
     await HomeWidget.updateWidget(
-        name: 'HabitWidgetProvider', iOSName: 'HabitWidgetProvider');
+      name: 'HabitWidgetProvider',
+      iOSName: 'HabitWidgetProvider',
+    );
   }
 
   static Future<void> init() async {

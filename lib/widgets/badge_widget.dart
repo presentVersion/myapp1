@@ -19,18 +19,12 @@ class BadgeWidget extends StatelessWidget {
       width: 100,
       child: Column(
         children: [
-          SvgPicture.asset(
-            badge.iconAsset,
-            height: 60,
-          ),
+          SvgPicture.asset(badge.iconAsset, height: 60),
           const SizedBox(height: 8),
           Text(
             badge.title,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
           ),
         ],
       ),

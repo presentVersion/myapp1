@@ -10,14 +10,27 @@ class WeeklyProgressView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final today = DateTime.now();
-    final weekDays = List.generate(7, (index) => today.subtract(Duration(days: 6 - index)));
-    const dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    final weekDays = List.generate(
+      7,
+      (index) => today.subtract(Duration(days: 6 - index)),
+    );
+    const dayNames = [
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ];
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: weekDays.map((day) {
         final dayName = dayNames[day.weekday - 1];
-        final isCompleted = habit.completedDates.any((completedDate) => DateUtils.isSameDay(completedDate, day));
+        final isCompleted = habit.completedDates.any(
+          (completedDate) => DateUtils.isSameDay(completedDate, day),
+        );
         const isFrozen = false; // Replace with your logic for frozen days
 
         String assetName;

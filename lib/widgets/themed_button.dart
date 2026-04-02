@@ -1,62 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class ThemedButton extends StatefulWidget {
+class ThemedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
 
   const ThemedButton({super.key, required this.onPressed, required this.text});
 
   @override
-  State<ThemedButton> createState() => _ThemedButtonState();
-}
-
-class _ThemedButtonState extends State<ThemedButton> {
-  bool _isPressed = false;
-
-  void _onTapDown(TapDownDetails details) {
-    setState(() {
-      _isPressed = true;
-    });
-  }
-
-  void _onTapUp(TapUpDetails details) {
-    setState(() {
-      _isPressed = false;
-    });
-    widget.onPressed();
-  }
-
-  void _onTapCancel() {
-    setState(() {
-      _isPressed = false;
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: _onTapDown,
-      onTapUp: _onTapUp,
-      onTapCancel: _onTapCancel,
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          SvgPicture.asset(
-            _isPressed
-                ? 'assets/images/Continuebuttonstateafterpressed.svg'
-                : 'assets/images/Continuebuttonstatebeforepressed.svg',
-          ),
-          Text(
-            widget.text,
-            style: const TextStyle(
-              color: Colors.white,
-              fontFamily: 'DINRoundPro',
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-            ),
-          ),
-        ],
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF58CC02),
+        padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+          side: const BorderSide(color: Color(0xFFE5E5E5), width: 2.0),
+        ),
+        shadowColor: const Color(0xFF439E02),
+        elevation: 5,
+      ),
+      child: Text(
+        text,
+        style: const TextStyle(
+          fontFamily: 'DuolingoFeather',
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+          color: Colors.white,
+        ),
       ),
     );
   }

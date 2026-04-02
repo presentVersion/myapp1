@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:habit_tracker/models/habit.dart';
-import 'package:habit_tracker/widgets/themed_button.dart';
+import 'package:habit_tracker/widgets/continue_button.dart';
 import 'package:habit_tracker/widgets/weekly_progress_view.dart';
 
 class StreakCelebrationScreen extends StatefulWidget {
@@ -11,7 +11,8 @@ class StreakCelebrationScreen extends StatefulWidget {
   const StreakCelebrationScreen({super.key, required this.habit});
 
   @override
-  State<StreakCelebrationScreen> createState() => _StreakCelebrationScreenState();
+  State<StreakCelebrationScreen> createState() =>
+      _StreakCelebrationScreenState();
 }
 
 class _StreakCelebrationScreenState extends State<StreakCelebrationScreen> {
@@ -24,6 +25,7 @@ class _StreakCelebrationScreenState extends State<StreakCelebrationScreen> {
     _controller = VideoPlayerController.asset('assets/videos/Animation1.mp4')
       ..initialize().then((_) {
         setState(() {});
+        _controller.setVolume(1.0); // Set volume to full
         _controller.play();
         _controller.setLooping(true);
       });
@@ -76,7 +78,7 @@ class _StreakCelebrationScreenState extends State<StreakCelebrationScreen> {
                           color: Colors.black,
                           offset: Offset(0, 0),
                         ),
-                      ]
+                      ],
                     ),
                   ),
                   const SizedBox(height: 20),
@@ -95,13 +97,12 @@ class _StreakCelebrationScreenState extends State<StreakCelebrationScreen> {
               opacity: _showContent ? 1.0 : 0.0,
               duration: const Duration(milliseconds: 500),
               child: Center(
-                child: ThemedButton(
+                child: ContinueButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  text: 'CONTINUE',
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

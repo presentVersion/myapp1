@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:habit_tracker/models/habit.dart';
@@ -66,9 +65,7 @@ class _StreakScreenState extends State<StreakScreen> {
                   ),
                 )
               : const Center(child: CircularProgressIndicator()),
-          Container(
-            color: Colors.black.withOpacity(0.5),
-          ),
+          Container(color: Colors.black.withOpacity(0.5)),
           SafeArea(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -127,27 +124,28 @@ class _StreakScreenState extends State<StreakScreen> {
   Widget _buildWeekProgress() {
     final today = DateTime.now();
     final startOfWeek = today.subtract(Duration(days: today.weekday - 1));
-    final days = List.generate(7, (index) => startOfWeek.add(Duration(days: index)));
-    final dayNames = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+    final days = List.generate(
+      7,
+      (index) => startOfWeek.add(Duration(days: index)),
+    );
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: List.generate(7, (index) {
         final day = days[index];
-        final dayName = dayNames[index];
-        final isCompleted = widget.habit.completedDates.any((d) => DateUtils.isSameDay(d, day));
+        final isCompleted = widget.habit.completedDates.any(
+          (d) => DateUtils.isSameDay(d, day),
+        );
         const isFrozen = false; // Replace with your logic for frozen days
 
-        String assetName;
-        if (isCompleted) {
-          assetName = 'assets/images/${dayName}checked.svg';
-        } else if (isFrozen) {
-          assetName = 'assets/images/${dayName}freezed.svg';
-        } else {
-          assetName = 'assets/images/${dayName}unchecked.svg';
-        }
+        // You can add your logic here for different images based on completion or other states
 
-        return SvgPicture.asset(assetName, height: 40);
+        return SvgPicture.asset(
+          isCompleted
+              ? 'assets/images/day_filled.svg'
+              : 'assets/images/day_unfilled.svg',
+          height: 40,
+        );
       }),
     );
   }
