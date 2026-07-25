@@ -13,6 +13,7 @@ class ContinueButton extends StatefulWidget {
 
 class ContinueButtonState extends State<ContinueButton> {
   final player = AudioPlayer();
+  bool _isPressed = false;
 
   @override
   void dispose() {
@@ -23,12 +24,29 @@ class ContinueButtonState extends State<ContinueButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () async {
-        await player.setAsset('assets/audio/Continue.mp3');
-        player.play();
+      onTapDown: (_) => setState(() => _isPressed = true),
+      onTapUp: (_) async {
+        setState(() => _isPressed = false);
+        try {
+          await player.setAsset('assets/audio/Continue.mp3');
+          player.play();
+        } catch (e) {
+          // Fallback if audio fails to load
+        }
         widget.onPressed();
       },
-      child: SvgPicture.asset('assets/images/Continue.svg', height: 50),
+      onTapCancel: () => setState(() => _isPressed = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 50),
+        child: SvgPicture.asset(
+          _isPressed
+              ? 'assets/images/Continuebuttonstateafterpressed.svg'
+              : 'assets/images/Continuebuttonstatebeforepressed.svg',
+          height: 50,
+          fit: BoxFit.contain,
+        ),
+      ),
     );
   }
 }
+

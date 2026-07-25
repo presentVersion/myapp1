@@ -1,34 +1,63 @@
 import 'package:flutter/material.dart';
 
-class ThemedButton extends StatelessWidget {
+class ThemedButton extends StatefulWidget {
   final VoidCallback onPressed;
   final String text;
 
   const ThemedButton({super.key, required this.onPressed, required this.text});
 
   @override
+  State<ThemedButton> createState() => _ThemedButtonState();
+}
+
+class _ThemedButtonState extends State<ThemedButton> {
+  bool _isPressed = false;
+
+  @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFF58CC02),
-        padding: const EdgeInsets.symmetric(horizontal: 100, vertical: 20),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          side: const BorderSide(color: Color(0xFFE5E5E5), width: 2.0),
-        ),
-        shadowColor: const Color(0xFF439E02),
-        elevation: 5,
-      ),
-      child: Text(
-        text,
-        style: const TextStyle(
-          fontFamily: 'DuolingoFeather',
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-          color: Colors.white,
+    final isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    final double depth = 4.0;
+
+    return GestureDetector(
+      onTapDown: (_) => setState(() => _isPressed = true),
+      onTapUp: (_) {
+        setState(() => _isPressed = false);
+        widget.onPressed();
+      },
+      onTapCancel: () => setState(() => _isPressed = false),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 50),
+        padding: EdgeInsets.only(top: _isPressed ? depth : 0),
+        child: Container(
+          height: 56,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: const Color(0xFF58CC02),
+            borderRadius: BorderRadius.circular(16),
+            border: Border(
+              top: const BorderSide(color: Colors.transparent),
+              left: const BorderSide(color: Colors.transparent),
+              right: const BorderSide(color: Colors.transparent),
+              bottom: BorderSide(
+                color: _isPressed 
+                    ? Colors.transparent 
+                    : (isDarkMode ? const Color(0xFF327401) : const Color(0xFF439E02)),
+                width: _isPressed ? 0 : depth,
+              ),
+            ),
+          ),
+          child: Text(
+            widget.text,
+            style: const TextStyle(
+              fontFamily: 'DINRoundPro',
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Colors.white,
+            ),
+          ),
         ),
       ),
     );
   }
 }
+

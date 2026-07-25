@@ -26,7 +26,10 @@ class HabitCard extends StatelessWidget {
         color: cardColor,
         borderRadius: BorderRadius.circular(16),
         border: Border(
-          bottom: BorderSide(color: isDarkMode ? const Color(0xFF424242) : const Color(0xFFE5E5E5), width: 4),
+          top: BorderSide(color: isDarkMode ? const Color(0xFF2C2C2C) : const Color(0xFFE5E5E5), width: 2),
+          left: BorderSide(color: isDarkMode ? const Color(0xFF2C2C2C) : const Color(0xFFE5E5E5), width: 2),
+          right: BorderSide(color: isDarkMode ? const Color(0xFF2C2C2C) : const Color(0xFFE5E5E5), width: 2),
+          bottom: BorderSide(color: isDarkMode ? const Color(0xFF2C2C2C) : const Color(0xFFE5E5E5), width: 4),
         ),
       ),
       child: Material(
