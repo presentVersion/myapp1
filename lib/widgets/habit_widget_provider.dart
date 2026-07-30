@@ -16,7 +16,7 @@ class HabitWidgetProvider {
       await HomeWidget.renderFlutterWidget(
         widget,
         key: 'widget_image',
-        size: const Size(320, 160),
+        logicalSize: const Size(320, 160),
       );
 
       // Save additional key-value properties
