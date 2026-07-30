@@ -48,7 +48,7 @@ class HabitTrackerApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
         // Design Law: No Sharp Corners (Global 16.0)
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: Colors.white,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -56,7 +56,7 @@ class HabitTrackerApp extends StatelessWidget {
           ),
           elevation: 0,
         ),
-        dialogTheme: DialogTheme(
+        dialogTheme: DialogThemeData(
           backgroundColor: Colors.white,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
@@ -79,7 +79,7 @@ class HabitTrackerApp extends StatelessWidget {
           surface: const Color(0xFF1E1E1E),
           brightness: Brightness.dark,
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           color: const Color(0xFF1E1E1E),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
@@ -87,7 +87,7 @@ class HabitTrackerApp extends StatelessWidget {
           ),
           elevation: 0,
         ),
-        dialogTheme: DialogTheme(
+        dialogTheme: DialogThemeData(
           backgroundColor: const Color(0xFF121212),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         ),
