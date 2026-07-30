@@ -36,7 +36,7 @@ class HabitTrackerApp extends StatelessWidget {
       title: 'Habit Tracker',
       themeMode: themeProvider.themeMode,
       theme: ThemeData(
-        use_material3: true,
+        useMaterial3: true,
         brightness: Brightness.light,
         scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSeed(
@@ -68,7 +68,7 @@ class HabitTrackerApp extends StatelessWidget {
         fontFamily: 'DINRoundPro', // As per assets
       ),
       darkTheme: ThemeData(
-        use_material3: true,
+        useMaterial3: true,
         brightness: Brightness.dark,
         scaffoldBackgroundColor: const Color(0xFF121212),
         colorScheme: ColorScheme.fromSeed(
@@ -476,7 +476,6 @@ class _AddHabitDialogState extends State<AddHabitDialog> {
                         backgroundColor: isDarkMode ? const Color(0xFF2C2C2C) : Colors.white,
                         foregroundColor: isDarkMode ? Colors.white : const Color(0xFF777777),
                         elevation: 0,
-                        highlightElevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                           side: BorderSide(
@@ -518,7 +517,6 @@ class _AddHabitDialogState extends State<AddHabitDialog> {
                         backgroundColor: const Color(0xFF58CC02),
                         foregroundColor: Colors.white,
                         elevation: 0,
-                        highlightElevation: 0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
                           side: const BorderSide(
