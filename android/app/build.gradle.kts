@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.example.habit_tracker"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
