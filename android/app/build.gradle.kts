@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.example.habit_tracker"
-    compileSdk = 35
+    compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -47,4 +47,10 @@ flutter {
 }
 dependencies {
     implementation("androidx.glance:glance-appwidget:1.1.0")
+}
+configurations.all {
+    resolutionStrategy {
+        force("androidx.glance:glance-appwidget:1.1.0")
+        force("androidx.glance:glance:1.1.0")
+    }
 }
