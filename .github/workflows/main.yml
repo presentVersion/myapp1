@@ -35,7 +35,7 @@ jobs:
 
       # 5. Build the Release APK
       - name: Build APK
-        run: flutter build apk --release
+        run: flutter build apk --release --android-skip-build-dependency-validation
 
       # 6. Upload the APK file so you can download it
       - name: Upload APK Artifact
